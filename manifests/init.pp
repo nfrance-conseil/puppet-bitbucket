@@ -36,20 +36,20 @@ class bitbucket(
   $gid            = undef,
 
   # Bitbucket 4.6.0 initialization configurations
-  $display_name  = 'bitbucket',
-  $base_url      = "https://${::fqdn}",
-  $license       = '',
-  $sysadmin_username = 'admin',
-  $sysadmin_password = 'bitbucket',
-  $sysadmin_name  = 'Bitbucket Admin',
+  String $display_name  = 'bitbucket',
+  Stdlib::HTTPSUrl $base_url      = "https://${Facts['network']['fqdn']}",
+  String $license       = '',
+  String $sysadmin_username = 'admin',
+  String $sysadmin_password = 'bitbucket',
+  String $sysadmin_name  = 'Bitbucket Admin',
   $sysadmin_email = '',
-  $config_properties = {},
+  Hash $config_properties = {},
 
   # Database Settings
-  $dbuser       = 'bitbucket',
-  $dbpassword   = 'password',
-  $dburl        = 'jdbc:postgresql://localhost:5432/bitbucket',
-  $dbdriver     = 'org.postgresql.Driver',
+  String $dbuser       = 'bitbucket',
+  String $dbpassword   = 'password',
+  String $dburl        = 'jdbc:postgresql://localhost:5432/bitbucket',
+  String $dbdriver     = 'org.postgresql.Driver',
 
   # Data Center Settings
   $hazelcast_network = undef,
@@ -97,9 +97,6 @@ class bitbucket(
   $deploy_module = 'archive',
 
 ) {
-
-  validate_hash($config_properties)
-
   include ::bitbucket::params
 
   Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
